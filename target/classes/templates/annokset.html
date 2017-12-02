@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Smoothietietokanta</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <a href="/" class="btn btn-default btn-xs">
+                        <i class="glyphicon glyphicon-menu-left"></i>
+                        Etusivulle
+                    </a> 
+                    <h1>Smoothiet</h1>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="annos : ${annokset}">
+                            <a th:href="@{~/annokset/{id}(id=${annos.getId()})}">
+                                <span th:text="${annos.getNimi()}">Annos</span>
+                            </a>    
+                        </li>
+                    </ul>
+                    <form method="POST" action="/annokset">
+                        <div class="form-group">    
+                            <label for="nimi">Nimi</label>
+                            <input class="form-control" id="form-control-name" type="text" name="nimi" placeholder="Esim. banaanismoothie"/>
+                            <p id="notification" style="color:red;"></p>
+                        </div>
+
+                        <div class="form-group"> 
+                            <label for="content">Valmistusohje</label>
+                            <textarea class="form-control" name="ohje"></textarea><br/>
+                        </div>    
+                        <input type="submit" value="Lisää smoothie" class="btn btn-primary"/>
+                    </form>
+                </div>
+            </div>
+           
+        </div>
+        <script>
+            var url = new URL(window.location.href);
+            var notification = document.getElementById("notification");
+            var error = url.searchParams.get("virhe");
+            
+            if (error) {
+                notification.innerText = "Nimi on jo käytössä.";
+            }
+            
+        </script>
+    </body>
+</html>

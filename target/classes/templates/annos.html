@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Smoothietietokanta | Annos</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/annokset" class="btn btn-default btn-xs">
+                        <i class="glyphicon glyphicon-menu-left"></i>
+                        Kaikki smoothiet
+                    </a>    
+                    <h1 th:text="${annos.getNimi()}">Annos</h1>
+                </div>
+            </div>
+           
+        </div>
+    </body>
+</html>
