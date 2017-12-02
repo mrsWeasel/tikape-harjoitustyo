@@ -31,10 +31,30 @@
                             <p id="notification" style="color:red;"></p>
                         </div>
 
+                        <div class="form-group">
+                            <h3>Raaka-aineet</h3>
+                            <select id="select">
+                                <option th:each="raakaaine : ${raakaaineet}" th:text="${raakaaine.getNimi()}" th:value="${raakaaine.getId()}"/>
+                            </select>
+                            <label style="margin-left: 1rem">Määrä:<input id="maara" type="number" step="0.5" value="1" /></label>
+                            <label style="margin-left: 1rem">Yksikkö:
+                                <select id="yksikko">
+                                    <option value="kpl">kpl</option>
+                                    <option value="g">g</option>
+                                    <option value="dl">dl</option>
+                                    <option value="tl">tl</option>
+                                    <option value="rkl">rkl</option>
+                                </select>    
+                            </label>
+                            <button class="btn btn-default btn-xs" id="add">Lisää raaka-aine</button>
+                            <div id="lisatyt"></div>
+                        </div>
+                        
                         <div class="form-group"> 
                             <label for="content">Valmistusohje</label>
                             <textarea class="form-control" name="ohje"></textarea><br/>
-                        </div>    
+                        </div>
+                        
                         <input type="submit" value="Lisää smoothie" class="btn btn-primary"/>
                     </form>
                 </div>
@@ -49,6 +69,48 @@
             if (error) {
                 notification.innerText = "Nimi on jo käytössä.";
             }
+            
+            var button = document.getElementById("add");
+            var select = document.getElementById("select");
+            var maaraInput = document.getElementById("maara");
+            var yksikkoInput = document.getElementById("yksikko");
+            var form = document.getElementsByTagName("form")[0];
+            var lisatyt = document.getElementById("lisatyt");
+            console.log(button);
+            
+            button.addEventListener("click", function(e) {
+               e.stopPropagation();
+               e.preventDefault();
+               if (e.target.nodeName == "BUTTON") {
+                   var div = document.createElement("div");
+                   var inputNimi = document.createElement("input");
+                   inputNimi.setAttribute("type", "hidden");
+                   inputNimi.setAttribute("name", "ranimi_" + select.value);
+                   inputNimi.setAttribute("value", select.value);
+                   var inputNimiLabel = document.createElement("span");
+                   inputNimiLabel.innerText = select.options[select.selectedIndex].text;
+                   var inputMaara = document.createElement("input");
+                   inputMaara.setAttribute("type", "number");
+                   inputMaara.setAttribute("name", "ramaara_" + select.value);
+                   inputMaara.setAttribute("value", maaraInput.value);
+                   var inputYksikko = document.createElement("input");
+                   inputYksikko.setAttribute("type", "hidden");
+                   inputYksikko.setAttribute("name", "rayksikko_" + select.value);
+                   inputYksikko.setAttribute("value", yksikkoInput.value);
+                   var inputYksikkoLabel = document.createElement("span");
+                   inputYksikkoLabel.innerText = yksikkoInput.value;
+                   
+                   lisatyt.appendChild(div);
+                   div.appendChild(inputNimiLabel);
+                   div.appendChild(inputMaara);
+                   div.appendChild(inputYksikkoLabel);
+                   div.appendChild(inputNimi);
+                   div.appendChild(inputYksikko);
+                  
+                   
+                   //todo: disabloi "käytetty" option
+               }
+            });
             
         </script>
     </body>

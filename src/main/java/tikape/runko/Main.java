@@ -33,7 +33,7 @@ public class Main {
         get("/annokset", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("annokset", annosDao.findAllInAlphabeticalOrder());
-           
+            map.put("raakaaineet", raakaAineDao.findAllInAlphabeticalOrder());
             return new ModelAndView(map, "annokset");
         }, new ThymeleafTemplateEngine());
         
@@ -45,6 +45,8 @@ public class Main {
             } else {
                 Annos a = new Annos(null, req.queryParams("nimi"));
                 Annos b = annosDao.save(a);
+                // todo: tallenna annosraakaaine-tauluun ainekset
+                System.out.println(req.queryParams());
                 res.redirect("/annokset/" + b.getId() + "?lisatty=" + req.queryParams("nimi"));
                 return "";
             }
