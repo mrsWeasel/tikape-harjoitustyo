@@ -25,6 +25,7 @@
                         </li>
                     </ul>
                     <form method="POST" action="/annokset">
+                        <h2>Lisää smoothie</h2>
                         <div class="form-group">    
                             <label for="nimi">Nimi</label>
                             <input class="form-control" id="form-control-name" type="text" name="nimi" placeholder="Esim. banaanismoothie"/>
@@ -34,6 +35,7 @@
                         <div class="form-group">
                             <h3>Raaka-aineet</h3>
                             <select id="select">
+                                <option value="-1">Valitse</option>
                                 <option th:each="raakaaine : ${raakaaineet}" th:text="${raakaaine.getNimi()}" th:value="${raakaaine.getId()}"/>
                             </select>
                             <label style="margin-left: 1rem">Määrä:<input id="maara" type="number" step="0.5" value="1" /></label>
@@ -61,57 +63,6 @@
             </div>
            
         </div>
-        <script>
-            var url = new URL(window.location.href);
-            var notification = document.getElementById("notification");
-            var error = url.searchParams.get("virhe");
-            
-            if (error) {
-                notification.innerText = "Nimi on jo käytössä.";
-            }
-            
-            var button = document.getElementById("add");
-            var select = document.getElementById("select");
-            var maaraInput = document.getElementById("maara");
-            var yksikkoInput = document.getElementById("yksikko");
-            var form = document.getElementsByTagName("form")[0];
-            var lisatyt = document.getElementById("lisatyt");
-            console.log(button);
-            
-            button.addEventListener("click", function(e) {
-               e.stopPropagation();
-               e.preventDefault();
-               if (e.target.nodeName == "BUTTON") {
-                   var div = document.createElement("div");
-                   var inputNimi = document.createElement("input");
-                   inputNimi.setAttribute("type", "hidden");
-                   inputNimi.setAttribute("name", "ranimi_" + select.value);
-                   inputNimi.setAttribute("value", select.value);
-                   var inputNimiLabel = document.createElement("span");
-                   inputNimiLabel.innerText = select.options[select.selectedIndex].text;
-                   var inputMaara = document.createElement("input");
-                   inputMaara.setAttribute("type", "number");
-                   inputMaara.setAttribute("name", "ramaara_" + select.value);
-                   inputMaara.setAttribute("value", maaraInput.value);
-                   var inputYksikko = document.createElement("input");
-                   inputYksikko.setAttribute("type", "hidden");
-                   inputYksikko.setAttribute("name", "rayksikko_" + select.value);
-                   inputYksikko.setAttribute("value", yksikkoInput.value);
-                   var inputYksikkoLabel = document.createElement("span");
-                   inputYksikkoLabel.innerText = yksikkoInput.value;
-                   
-                   lisatyt.appendChild(div);
-                   div.appendChild(inputNimiLabel);
-                   div.appendChild(inputMaara);
-                   div.appendChild(inputYksikkoLabel);
-                   div.appendChild(inputNimi);
-                   div.appendChild(inputYksikko);
-                  
-                   
-                   //todo: disabloi "käytetty" option
-               }
-            });
-            
-        </script>
+        <script src="/scripts/annokset.js"></script>
     </body>
 </html>

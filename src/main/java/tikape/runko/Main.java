@@ -2,6 +2,7 @@ package tikape.runko;
 
 import java.util.HashMap;
 import spark.ModelAndView;
+import spark.Spark;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
@@ -15,6 +16,7 @@ import tikape.runko.database.AnnosRaakaAineDao;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        Spark.staticFileLocation("/public");
         Database database = new Database("jdbc:sqlite:smoothiet.db");
         //database.init();
 
@@ -34,6 +36,7 @@ public class Main {
             HashMap map = new HashMap<>();
             map.put("annokset", annosDao.findAllInAlphabeticalOrder());
             map.put("raakaaineet", raakaAineDao.findAllInAlphabeticalOrder());
+            
             return new ModelAndView(map, "annokset");
         }, new ThymeleafTemplateEngine());
         
@@ -70,7 +73,7 @@ public class Main {
         get("/annokset/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("annos", annosDao.findOne(Integer.parseInt(req.params("id"))));
-            
+            System.out.println(System.getProperty("user.dir"));
             return new ModelAndView(map, "annos");
         }, new ThymeleafTemplateEngine());
 
