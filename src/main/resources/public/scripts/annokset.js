@@ -14,6 +14,22 @@
             var form = document.getElementsByTagName("form")[0];
             var lisatyt = document.getElementById("lisatyt");
             
+            form.addEventListener("submit", function(e) {
+                var inputs = lisatyt.getElementsByTagName("input");
+                var counter = 0;
+                // järjestysnumero ainesosille vasta lähetettäessä, 
+                // koska järjestys voi muuttua ainesosien lisäämisen jälkeen
+                for (var i = 0; i < inputs.length; i++) {
+                    // järjestysnumero tarvitaan vain yhteen kenttään / rivi
+                    if (inputs[i].hasAttribute("name") && inputs[i].getAttribute("name").includes("ra_nimi_")) {
+                        var n = inputs[i].getAttribute("name");
+                        inputs[i].setAttribute("name", n + "[" + counter + "]");
+                        counter ++;
+                    }
+                    
+                }
+            });
+            
             function elementFactory(obj) {
                 
                 var element = document.createElement(obj.tagname);
@@ -47,7 +63,7 @@
             function disableOption(value) {
                 var options = select.getElementsByTagName("option");
                 for (var i = 0; i < options.length; i++) {
-                    if (options[i].value === select.value && options[i].disabled == false) {
+                    if (options[i].value === value && options[i].disabled == false) {
                         options[i].disabled = true;
                     } 
                 }

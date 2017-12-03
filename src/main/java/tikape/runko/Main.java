@@ -1,6 +1,7 @@
 package tikape.runko;
 
 import java.util.HashMap;
+import java.util.Set;
 import spark.ModelAndView;
 import spark.Spark;
 import static spark.Spark.*;
@@ -54,6 +55,8 @@ public class Main {
                 Annos a = new Annos(null, req.queryParams("nimi"));
                 Annos b = annosDao.save(a);
                 // todo: tallenna annosraakaaine-tauluun ainekset
+                
+                Set<String> params = req.queryParams();
                 System.out.println(req.queryParams());
                 res.redirect("/annokset/" + b.getId() + "?lisatty=" + req.queryParams("nimi"));
                 return "";
