@@ -17,15 +17,18 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
         this.database = database;
         this.tableName = tableName;
     }
-   
-    public void delete() {
-        //ei toteutettu vielä
-    }
-
+    
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = database.getConnection()) {
+            // poistetaan kaikki tiettyyn annokseen liittyvät rivit
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM " + tableName + " WHERE annos_id = ?");
+            stmt.setInt(1, key);
+            stmt.executeUpdate();
+        }
     }
+
+ 
     
     public AnnosRaakaAine findOneByTwoKeys(Integer key1, Integer key2) throws SQLException {
         try (Connection conn = database.getConnection()) {

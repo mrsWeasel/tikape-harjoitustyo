@@ -69,7 +69,6 @@ public class Main {
                     if (param.contains("ra_nimi_")) {
                         // parsitaan raaka-aineen id name-attribuutista
                         Integer id = Integer.parseInt(param.substring(8, param.indexOf("[")));
-                        
                         // raaka-aineiden järjestys
                         Integer jarjestys = Integer.parseInt(param.substring((param.indexOf("[") + 1), (param.indexOf("]"))));
                         
@@ -120,6 +119,7 @@ public class Main {
         
         post("/poista/:id", (req, res) -> {
             if (annosDao.findOne(Integer.parseInt(req.params("id"))) != null) {
+                annosRaakaAineDao.delete(Integer.parseInt(req.params("id")));
                 annosDao.delete(Integer.parseInt(req.params("id")));
             }
             
