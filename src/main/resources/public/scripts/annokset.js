@@ -46,11 +46,12 @@
             
             
             lisatyt.addEventListener("click", function(e) {
-               //e.stopPropagation();
+               e.stopPropagation();
                e.preventDefault();
                if (e.target.nodeName === "BUTTON") {
-               var parent = this.getParentElement();
-               console.log(parent);
+               var parent = e.target.parentElement;
+               parent.parentElement.removeChild(parent);
+              
                }
             });
             
