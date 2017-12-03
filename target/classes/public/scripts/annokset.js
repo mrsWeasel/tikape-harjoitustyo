@@ -44,14 +44,12 @@
                 this.content = content;
             }
             
-            
-            lisatyt.addEventListener("click", function(e) {
-               //e.stopPropagation();
+            poista.addEventListener("click", function(e) {
+               e.stopPropagation();
                e.preventDefault();
-               if (e.target.nodeName === "BUTTON") {
+               
                var parent = this.getParentElement();
                console.log(parent);
-               }
             });
             
             button.addEventListener("click", function(e) {
