@@ -88,7 +88,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
     @Override
     public AnnosRaakaAine save(AnnosRaakaAine object) throws SQLException {
         try (Connection conn = database.getConnection()) {
-            if (findOneByTwoKeys(object.getAnnosId(), object.getAnnosId()) != null) {
+            if (findOneByTwoKeys(object.getAnnosId(), object.getRaakaAineId()) != null) {
                // tätä riviä ei saisi olla valmiiksi olemassa
                return null;
             }
