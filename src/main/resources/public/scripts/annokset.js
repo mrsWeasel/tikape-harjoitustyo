@@ -1,12 +1,3 @@
-            var url = new URL(window.location.href);
-            var notification = document.getElementById("notification");
-            var error = url.searchParams.get("virhe");
-            
-            // jos samanniminen annos on jo olemassa, tallentaminen ei onnistu
-            if (error) {
-                notification.innerText = "Nimi on jo käytössä.";
-            }
-            
             var button = document.getElementById("add");
             var select = document.getElementById("select");
             var maaraInput = document.getElementById("maara");
@@ -15,6 +6,7 @@
             var lisatyt = document.getElementById("lisatyt");
             
             form.addEventListener("submit", function(e) {
+                
                 var inputs = lisatyt.getElementsByTagName("input");
                 var counter = 0;
                 // järjestysnumero ainesosille vasta lähetettäessä, 
@@ -99,7 +91,7 @@
             
             button.addEventListener("click", function(e) {
                e.stopPropagation();
-               e.preventDefault();
+               //e.preventDefault();
                
                // eka valinta ei ole raaka-aine vaan "otsikko"
                if (select.value < 0) {
@@ -130,6 +122,7 @@
                    select.value = -1;
                    maaraInput.value = 1;
                    yksikkoInput.value = "kpl";
+                  
                }
               
             });
