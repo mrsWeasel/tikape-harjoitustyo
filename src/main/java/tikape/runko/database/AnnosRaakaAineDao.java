@@ -85,6 +85,10 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
     @Override
     public AnnosRaakaAine save(AnnosRaakaAine object) throws SQLException {
         try (Connection conn = database.getConnection()) {
+            if (findOneByTwoKeys(object.getAnnosId(), object.getAnnosId()) != null) {
+               // tätä riviä ei saisi olla valmiiksi olemassa
+               return null;
+            }
             //todo: ensin pitäisi tarkistaa, löytyyko tämä rivi JO kannasta...
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + tableName + " (annos_id, raaka_aine_id, jarjestys, maara, yksikko) "
                     + "VALUES (?,?,?,?,?)");
@@ -95,9 +99,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
             stmt.setDouble(4, object.getMaara());
             stmt.setString(5, object.getYksikko());
          
-            
             stmt.executeUpdate();
-            stmt.close();
             
             AnnosRaakaAine ar = findOneByTwoKeys(object.getAnnosId(), object.getRaakaAineId());
             return ar;

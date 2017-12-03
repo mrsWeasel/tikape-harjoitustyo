@@ -77,11 +77,6 @@ public class Main {
                         Double maara = Double.parseDouble(req.queryParams("ra_maara_" + id));
                         String yksikko = req.queryParams("ra_yksikko_" + id);
                         
-                        if (annosRaakaAineDao.findOneByTwoKeys(b.getId(), id) != null) {
-                            // tätä riviä ei saisi olla valmiiksi olemassa
-                            // muutakin validointia tähän jos ehtii!
-                        }
-                        
                         annosRaakaAineDao.save(new AnnosRaakaAine(b.getId(), id, jarjestys, maara, yksikko));
                         
                     }
