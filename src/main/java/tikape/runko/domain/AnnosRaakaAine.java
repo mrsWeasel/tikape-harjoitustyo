@@ -6,15 +6,13 @@ public class AnnosRaakaAine {
     private Integer jarjestys;
     private double maara;
     private String yksikko;
-    private String ohje;
-    
-    public AnnosRaakaAine(Integer annos_id, Integer raaka_aine_id, Integer jarjestys, double maara, String yksikko, String ohje) {
+ 
+    public AnnosRaakaAine(Integer annos_id, Integer raaka_aine_id, Integer jarjestys, double maara, String yksikko) {
         this.annos_id = annos_id;
         this.raaka_aine_id = raaka_aine_id;
         this.jarjestys = jarjestys;
         this.maara = maara;
         this.yksikko = yksikko;
-        this.ohje = ohje;
     }
     
     public Integer getAnnosId() {
@@ -37,7 +35,4 @@ public class AnnosRaakaAine {
         return this.yksikko;
     }
     
-    public String getOhje() {
-        return this.ohje;
-    }
 }

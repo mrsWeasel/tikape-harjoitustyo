@@ -57,22 +57,22 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
     }
     
     public AnnosRaakaAine createFromRow(ResultSet rs) throws SQLException {
-        return new AnnosRaakaAine(rs.getInt("annos_id"), rs.getInt("raaka_aine_id"), rs.getInt("jarjestys"), rs.getDouble("maara"), rs.getString("yksikko"), rs.getString("ohje"));
+        return new AnnosRaakaAine(rs.getInt("annos_id"), rs.getInt("raaka_aine_id"), rs.getInt("jarjestys"), rs.getDouble("maara"), rs.getString("yksikko"));
     }
 
     @Override
     public AnnosRaakaAine save(AnnosRaakaAine object) throws SQLException {
         try (Connection conn = database.getConnection()) {
             //todo: ensin pitäisi tarkistaa, löytyyko tämä rivi JO kannasta...
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + tableName + " (annos_id, raaka_aine_id, jarjestys, maara, yksikko, ohje) "
-                    + "VALUES (?,?,?,?,?,?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO " + tableName + " (annos_id, raaka_aine_id, jarjestys, maara, yksikko) "
+                    + "VALUES (?,?,?,?,?)");
             
             stmt.setInt(1, object.getAnnosId());
             stmt.setInt(2, object.getRaakaAineId());
             stmt.setInt(3, object.getJarjestys());
             stmt.setDouble(4, object.getMaara());
             stmt.setString(5, object.getYksikko());
-            stmt.setString(6, object.getOhje());
+         
             
             stmt.executeUpdate();
             stmt.close();
