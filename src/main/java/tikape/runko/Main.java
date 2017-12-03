@@ -71,8 +71,7 @@ public class Main {
                         Integer id = Integer.parseInt(param.substring(8, param.indexOf("[")));
                         // raaka-aineiden järjestys
                         Integer jarjestys = Integer.parseInt(param.substring((param.indexOf("[") + 1), (param.indexOf("]"))));
-                        
-                        // raaka-aineiden määrä
+                        // raaka-aineiden määrä + yksikkö
                         Double maara = Double.parseDouble(req.queryParams("ra_maara_" + id));
                         String yksikko = req.queryParams("ra_yksikko_" + id);
                         
