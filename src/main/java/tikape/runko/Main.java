@@ -119,9 +119,18 @@ public class Main {
             }
             
             map.put("raakaaineet", raakaAineet);
-            //System.out.println(System.getProperty("user.dir"));
+            
             return new ModelAndView(map, "annos");
         }, new ThymeleafTemplateEngine());
+        
+        post("/poista/:id", (req, res) -> {
+            if (annosDao.findOne(Integer.parseInt(req.params("id"))) != null) {
+                annosDao.delete(Integer.parseInt(req.params("id")));
+            }
+            
+            res.redirect("/annokset");
+            return "";
+        });
 
         get("/raaka-aineet", (req, res) -> {
             HashMap map = new HashMap<>();

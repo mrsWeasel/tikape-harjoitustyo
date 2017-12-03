@@ -14,8 +14,5 @@ public class AnnosDao extends AbstractNamedObjectDao<Annos> {
         return new Annos(rs.getInt("id"), rs.getString("nimi"));
     }
 
-    @Override
-    public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
 }
