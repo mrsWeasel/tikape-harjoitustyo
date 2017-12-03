@@ -2,6 +2,7 @@
             var notification = document.getElementById("notification");
             var error = url.searchParams.get("virhe");
             
+            // jos samanniminen annos on jo olemassa, tallentaminen ei onnistu
             if (error) {
                 notification.innerText = "Nimi on jo käytössä.";
             }
@@ -16,13 +17,13 @@
             function elementFactory(obj) {
                 
                 var element = document.createElement(obj.tagname);
-                if (obj.hasOwnProperty("type")) {
+                if (obj.hasOwnProperty("type") && obj.type !== "") {
                     element.setAttribute("type", obj.type);
                 }
-                if (obj.hasOwnProperty("name")) {
+                if (obj.hasOwnProperty("name")&& obj.name !== "") {
                     element.setAttribute("name", obj.name);
                 }
-                if (obj.hasOwnProperty("value")) {
+                if (obj.hasOwnProperty("value") && obj.value !== "") {
                     element.setAttribute("value", obj.value);
                 }
                 if (obj.hasOwnProperty("classname") && obj.classname !== "") {
@@ -63,24 +64,8 @@
                    var inputYksikkoLabel = elementFactory(new Element("span", "", "", "", "", yksikkoInput.value));
                    var poista = elementFactory(new Element("button", "", "", "", "poista btn btn-danger btn-xs", "Poista"));
                    poista.dataset.ra = select.value;
-                   //var inputMaara = document.createElement("input");
-                   //inputMaara.setAttribute("type", "number");
-                   //inputMaara.setAttribute("name", "ramaara_" + select.value);
-                   //inputMaara.setAttribute("value", maaraInput.value);
                    
-                   //var inputYksikko = document.createElement("input");
-                   //inputYksikko.setAttribute("type", "hidden");
-                   //inputYksikko.setAttribute("name", "rayksikko_" + select.value);
-                   //inputYksikko.setAttribute("value", yksikkoInput.value);
-                   
-                   //var inputYksikkoLabel = document.createElement("span");
-                   //inputYksikkoLabel.innerText = yksikkoInput.value;
-                   
-                   //var poista = document.createElement("button");
-                   //poista.setAttribute("class", "poista btn btn-danger btn-xs");
-                   //poista.dataset.ra = select.value;
-                   //poista.innerText = "Poista";
-                   
+                   // lisää kaikki elementit formin perään
                    lisatyt.appendChild(div);
                    div.appendChild(inputNimiLabel);
                    div.appendChild(inputMaara);

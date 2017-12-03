@@ -16,6 +16,11 @@ import tikape.runko.database.AnnosRaakaAineDao;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
         Spark.staticFileLocation("/public");
         Database database = new Database("jdbc:sqlite:smoothiet.db");
         //database.init();
