@@ -44,14 +44,40 @@
                 this.content = content;
             }
             
+            function disableOption(value) {
+                var options = select.getElementsByTagName("option");
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value === select.value && options[i].disabled == false) {
+                        options[i].disabled = true;
+                    } 
+                }
+            }
+            // ok, ei ole kauniisti tehty toistoineen kaikkineen, mutta kiire :)
+            function undisableOption(value) {
+                var options = select.getElementsByTagName("option");
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value === value && options[i].disabled == true) {
+                        console.log("Jihuuuu");
+                        options[i].disabled = false;
+                    } 
+                }
+            }
             
             lisatyt.addEventListener("click", function(e) {
                e.stopPropagation();
                e.preventDefault();
                if (e.target.nodeName === "BUTTON") {
-               var parent = e.target.parentElement;
+               var that = e.target;
+               // div    
+               var parent = that.parentElement;
+               
+               var id = that.dataset.ra;
+               console.log(id);
+               // jos raaka-aine poistetaan, vapautetaan se uudelleen käyttöön valikossa
+               undisableOption(id);
+               
                parent.parentElement.removeChild(parent);
-              
+               
                }
             });
             
@@ -82,7 +108,10 @@
                    div.appendChild(poista);
                    div.appendChild(inputNimi);
                    div.appendChild(inputYksikko);
- 
+                   
+                   // jo valittu raaka-aine pois käytöstä ja valikon nollaus
+                   disableOption(select.value);
+                   select.value = -1;
                }
               
             });
