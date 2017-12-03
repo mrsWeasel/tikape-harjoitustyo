@@ -17,6 +17,14 @@
                         Kaikki smoothiet
                     </a>    
                     <h1 th:text="${annos.getNimi()}">Annos</h1>
+                    <ol>
+                        <li th:each="raakaaine : ${raakaaineet}">
+                            <span th:text="${raakaaine.getRaakaAine().getNimi()}"></span>
+                             | Määrä: <span th:text="${raakaaine.getAnnosRaakaAine().getMaara()}">Määrä</span> <span th:text="${raakaaine.getAnnosRaakaAine().getYksikko()}">Yksikkö</span>
+                        </li>
+                        
+                    </ol>
+
                 </div>
             </div>
            

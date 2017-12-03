@@ -3,9 +3,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Annos;
 import tikape.runko.domain.AnnosRaakaAine;
+import tikape.runko.domain.RaakaAine;
 
 public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
     private Database database;
@@ -40,7 +42,27 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer, String> {
             }
         }
     }
-
+    
+   
+    public List<AnnosRaakaAine> findAllByKey(Integer key) throws SQLException {
+        try (Connection conn = database.getConnection()) {
+            
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine "
+                    + "WHERE annos_id = ? "
+                    + "ORDER BY jarjestys");
+            stmt.setInt(1, key);
+            ResultSet rs = stmt.executeQuery();
+            
+            List<AnnosRaakaAine> ra = new ArrayList<>();
+            
+            while(rs.next()) {
+                ra.add(new AnnosRaakaAine(rs.getInt("annos_id"), rs.getInt("raaka_aine_id"), rs.getInt("jarjestys"), rs.getDouble("maara"), rs.getString("yksikko")));
+            }
+            
+            return ra;
+        }
+    }
+    
     @Override
     public List<AnnosRaakaAine> findAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported."); //To change body of generated methods, choose Tools | Templates.

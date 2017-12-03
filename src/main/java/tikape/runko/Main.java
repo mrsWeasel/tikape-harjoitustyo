@@ -1,6 +1,8 @@
 package tikape.runko;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import spark.ModelAndView;
 import spark.Spark;
@@ -10,6 +12,7 @@ import tikape.runko.database.Database;
 import tikape.runko.domain.Annos;
 import tikape.runko.domain.RaakaAine;
 import tikape.runko.domain.AnnosRaakaAine;
+import tikape.runko.domain.RaakaAineWrapper;
 import tikape.runko.database.AnnosDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.database.AnnosRaakaAineDao;
@@ -53,8 +56,10 @@ public class Main {
                 res.redirect("/annokset?virhe=nimikaytossa");
                 return "";
             } else {
+                // tallennetaan annos
                 Annos a = new Annos(null, req.queryParams("nimi"));
                 Annos b = annosDao.save(a);
+                
                 // reseptiin kuuluvat raaka-aineet
                 // haetaan koko lomakedata, koska kenttien määrä ei ole vakio
                 Set<String> params = req.queryParams();
@@ -105,8 +110,16 @@ public class Main {
         get("/annokset/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("annos", annosDao.findOne(Integer.parseInt(req.params("id"))));
-            map.put("annosraakaaineet", annosRaakaAineDao.findAll());
-            System.out.println(System.getProperty("user.dir"));
+            
+            List<RaakaAine> ra = raakaAineDao.findAllByKey(Integer.parseInt(req.params("id")));
+            List<RaakaAineWrapper> raakaAineet = new ArrayList<>();
+            
+            for (RaakaAine r : ra) {
+                raakaAineet.add(new RaakaAineWrapper(r, annosRaakaAineDao.findOneByTwoKeys(Integer.parseInt(req.params("id")), r.getId())));
+            }
+            
+            map.put("raakaaineet", raakaAineet);
+            //System.out.println(System.getProperty("user.dir"));
             return new ModelAndView(map, "annos");
         }, new ThymeleafTemplateEngine());
 
