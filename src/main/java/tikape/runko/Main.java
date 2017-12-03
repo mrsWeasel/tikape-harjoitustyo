@@ -57,7 +57,9 @@ public class Main {
                 // todo: tallenna annosraakaaine-tauluun ainekset
                 
                 Set<String> params = req.queryParams();
-                System.out.println(req.queryParams());
+                System.out.println(params);
+                
+                
                 res.redirect("/annokset/" + b.getId() + "?lisatty=" + req.queryParams("nimi"));
                 return "";
             }
