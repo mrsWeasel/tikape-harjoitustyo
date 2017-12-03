@@ -128,6 +128,8 @@
                    // jo valittu raaka-aine pois käytöstä ja valikon nollaus
                    disableOption(select.value);
                    select.value = -1;
+                   maaraInput.value = 1;
+                   yksikkoInput.value = "kpl";
                }
               
             });
